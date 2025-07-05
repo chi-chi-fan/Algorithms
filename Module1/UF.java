@@ -22,7 +22,7 @@ public class UF{
         return id[p]; // Find the root of the component containing p
     }
 
-    public void union(int p, int q) {
+    public void quick_find (int p, int q) {
         int rootP = find(p);
         int rootQ = find(q);
         if (rootP == rootQ) return; // They are already connected
@@ -34,9 +34,16 @@ public class UF{
         }
         count--; // Decrease the number of components
     }
-    public void union_root(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
+    public int quick_union_find(int p){
+        while (p != id[p]) {
+            p = id[p]; // Follow the chain of roots until we reach the root
+        }
+        return p; // Return the root of the component containing p  
+
+    }
+    public void quick_union(int p, int q) {
+        int rootP = quick_union_find(p);
+        int rootQ = quick_union_find(q);
         if (rootP == rootQ) return; // They are already connected
 
         id[rootP] = rootQ; // Connect the root of p to the root of q
