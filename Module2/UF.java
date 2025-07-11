@@ -22,42 +22,17 @@ public class UF{
         return id[p]; // Find the root of the component containing p
     }
 
-    public void quick_find (int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if (rootP == rootQ) return; // They are already connected
+    public void union(int p, int q) {
+        int pid = find(p);
+        int qid = find(q);
+        if (pid == qid) return; // They are already connected
 
         for (int i = 0; i < id.length; i++) {
-            if (id[i] == rootP) {
-                id[i] = rootQ; // Connect the two components
+            if (id[i] == pid) {
+                id[i] = qid; // Connect all elements in the component of p to the component of q
             }
         }
         count--; // Decrease the number of components
     }
-    public int quick_union_find(int p){
-        while (p != id[p]) {
-            p = id[p]; // Follow the chain of roots until we reach the root
-        }
-        return p; // Return the root of the component containing p  
 
-    }
-    public void quick_union(int p, int q) {
-        int rootP = quick_union_find(p);
-        int rootQ = quick_union_find(q);
-        if (rootP == rootQ) return; // They are already connected
-
-        id[rootP] = rootQ; // Connect the root of p to the root of q
-        // This is a more efficient way to connect components
-        // as it avoids iterating through the entire array.
-        // It assumes that the roots are unique and that we are only connecting roots.
-        // This is a common optimization in union-find algorithms.
-        // It reduces the time complexity of union operations.
-        // The union operation now only updates the root of one component to point to the root of
-        // another component, rather than iterating through all elements.
-        // This is more efficient, especially for large datasets.
-        // The union operation now has a time complexity of O(1) for the root connection
-        // and O(N) for the initial setup, but the overall performance is improved
-        // because we are not iterating through the entire array for every union operation.
-        count--; // Decrease the number of components
-    }
 }
